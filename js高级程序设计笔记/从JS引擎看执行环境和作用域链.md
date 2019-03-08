@@ -96,7 +96,7 @@ executionContextObj = {
 
 对应下图执行环境（`Execution Context`）的基本结构：
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161215/223641112.png)
+![mark](http://blog.oeino.cn/blog/20161215/223641112.png)
 
 > 在一些书籍中，例如《JavaScript高级程序设计》中，是将`this`指针归纳到了变量对象中，国内的很多博客也遵从了这本书的设定，但是实际上这是错误的，`this`是属于执行环境里面，将会在后面详细说明原因
 
@@ -289,13 +289,13 @@ funcA(4);				//此处只传了一个参数
 
 依旧拿上面的例子说明，在`funcA`函数在当前的执行环境(Global EC)被**定义**的时候，会创建一个包含当前执行环境的作用域链的对象`[[Scopes]]`，全局执行环境的作用域链会被全部保存到`[[scope]]`这个属性中，这个时候，在全局对象（Global Object）中就会多了一个`funcA`的属性，我们可以从`window`中找到`funcA`这个对象。
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161217/210159437.png)
+![mark](http://blog.oeino.cn/blog/20161217/210159437.png)
 
 这张图是在`chrome`的环境下的，可以清晰的看到函数的`[[Scopes]]`属性中保存了定义`funcA`时的执行环境（全局）的作用域链，对于全局环境的作用域链则只有一个全局的变量对象，同时我们也看到一些关于原型链的属性和函数的一些固有属性。
 
 当调用并且执行`funcA`这个函数，就会按照本文上面的步骤去创建函数的执行环境，然后通过复制函数的`[[Scopes]]`属性中的对象去构建作用域链，也就是执行环境中的`scope chain`，此后，又有一个函数的活动对象`AO`被创建并推入执行环境作用域链的最前端，对于上面这个例子中的`funcA`函数的执行环境而言，其作用域链包含两个对象：函数自己的活动对象和全局对象的变量对象。所以实际上作用域链就是一个指向变量对象的指针列表，它只是引用但是不包含对象。
 
-![Execution Context](http://ogzrgstml.bkt.clouddn.com/blog/20161218/122734181.png)
+![Execution Context](http://blog.oeino.cn/blog/20161218/122734181.png)
 
 一张图，可以很直观的说明很多道理，如果能完全明白这张图，那么关于作用域链就能理解透彻了，下面在举一个实际的例子去理解函数定义时的细节
 
@@ -445,11 +445,11 @@ func = null;
 
 首先，对于第一个输出的`this.name`，我们是通过`object`这个对象调用`getNameFunc()`这个函数的，所以在其执行环境`EC`创建时，它的`this`的值将会被赋为`object`这个变量，所以输出的是`object`的`name:"the object"`
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161218/123418073.png)
+![mark](http://blog.oeino.cn/blog/20161218/123418073.png)
 
 然后，这个函数返回了一个匿名函数，我们将这个函数用`func`记录了下来，由于这个匿名函数的定义时在`getNameFunc`的执行环境中的，所以这个匿名函数的作用域链就包含了其外部执行环境(getNameFunc Execution Context)的活动对象，所以输出`name`会顺着作用域链找到`the anonymous`并且返回，这个就是闭包，最后，我们是在全局环境中调用的`func()`，显而易见，`func`的执行环境的`this`的值会被赋值为`window`，最后输出`the window`
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161218/123456953.png)
+![mark](http://blog.oeino.cn/blog/20161218/123456953.png)
 
 需要说明的是，当`getNameFunc`执行完毕后，其执行环境会被销毁，但是其活动对象不会被销毁，因为匿名函数的作用域链依旧在引用着这个活动对象，只有当匿名函数被销毁后，`getNameFunc`的活动对象才会被干掉，所以我们需要将`func = null`
 

@@ -34,11 +34,11 @@ console.log(instance.getSuperValue());	//father
 
 上面代码很好理解，就是将`SuperType`的实例当做了`SubType`的原型对象，我们新建了一个`SubType`的实例，只不过我们没有使用默认提供的原型，而是给他替换了一个新原型，新原型有作为`SuperType`实例的所有属性和方法，这样顺着原型链，就能够继承`SuperType`的属性和方法了，具体的指针连接如下图：
 
-![原型链](http://ogzrgstml.bkt.clouddn.com/2.jpg)
+![原型链](http://blog.oeino.cn/2.jpg)
 
 在`javascript`中一切皆为对象，所有的对象都继承至`Object`，所以上面的例子的完整的原型链如下图：
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161121/215530905.png)
+![mark](http://blog.oeino.cn/blog/20161121/215530905.png)
 
 
 
@@ -123,7 +123,7 @@ console.log(instance2.sayAge());//38
 
 两次调用不仅性能差，而且在`SubType`的原型对象和实例中都含有`name`属性和`colors`数组，如下图：
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161121/230614948.png)
+![mark](http://blog.oeino.cn/blog/20161121/230614948.png)
 
 子类原型对象和子类实例拥有相同的属性，为了解决这个问题，现在进入完美继承第三步：寄生组合式继承
 
@@ -238,7 +238,7 @@ var bar = new SubType();
 
 下面是上面代码的指针图，其中`foo`就是空构造函数`F()`
 
-![mark](http://ogzrgstml.bkt.clouddn.com/blog/20161121/225228765.png)
+![mark](http://blog.oeino.cn/blog/20161121/225228765.png)
 
 这种继承就是完美的继承，不仅可以继承属性，继承共享的方法，还不造成内存浪费得以提升性能，同时，原型链也是保存下来的，所以用可以正常用`instanceof`和`isPrototype()`去进行对象识别。
 
